@@ -2,7 +2,7 @@ import requests
 import pygal
 from pygal.style import LightColorizedStyle as LCS, LightenStyle as LS
 
-url = 'https://api.github.com/search/repositories?q=language:python&sort=stars'#该URL可直接在浏览器中打开查看数据格式
+url = 'https://api.github.com/search/repositories?q=language:C&sort=stars'#该URL可直接在浏览器中打开查看数据格式
 r = requests.get(url)#调用API请求
 print('Status code:', r.status_code)#status_code是响应对象的一个属性，可用来检查API请求是否成功，状态码200表示请求成功
 result_dict = r.json()#该Github的API请求返回JSON格式的信息，使用json()方法使之转换成Python字典
@@ -43,9 +43,9 @@ for repo_dict in repo_dicts:
         'value': repo_dict['stargazers_count'],#项目的星值
         'label': str(repo_dict['description']),#项目的描述性信息，对于有些项目其描述可能为None，它没有decode方法
         'xlink': repo_dict['html_url'],#项目的链接
-    }
+    }#注意：对于用在条形图上需要显示的内容，只能用字典存储，且字典的键只能是'value','label','xlink'
     plot_dicts.append(plot_dict)
-print(plot_dicts)
+#print(plot_dicts)
 
 '''可视化'''
 my_style = LS('#336699', base_style=LCS)#定制Bar的颜色风格，十六进制的RGB颜色，基本样式为LCS
